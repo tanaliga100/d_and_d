@@ -1,6 +1,54 @@
 // Code goes here!
 console.log("%c D&D_Project", "color: red");
+
+// validate inputs
+interface Validatable {
+  value?: string | number;
+  required?: boolean;
+  maxLength?: number;
+  minLength?: number;
+  min?: number;
+  max?: number;
+}
+
+function validate(validatableInput: Validatable) {
+  let isValid = true;
+  // FOR VALUE
+  if (validatableInput.required) {
+    isValid = isValid && validatableInput.value?.toString().trim().length !== 0;
+  }
+  if (
+    validatableInput.minLength != null &&
+    typeof validatableInput.value === "string"
+  ) {
+    isValid =
+      isValid && validatableInput.value.length > validatableInput.minLength;
+  }
+
+  if (
+    validatableInput.maxLength &&
+    typeof validatableInput.value === "string"
+  ) {
+    isValid =
+      isValid && validatableInput.value.length < validatableInput.maxLength;
+  }
+  if (
+    validatableInput.min != null &&
+    typeof validatableInput.value === "number"
+  ) {
+    isValid = isValid && validatableInput.value > validatableInput.min;
+  }
+  if (
+    validatableInput.max != null &&
+    typeof validatableInput.value === "number"
+  ) {
+    isValid = isValid && validatableInput.value < validatableInput.max;
+  }
+
+  return isValid;
+}
 //autobind decorator
+
 function AutoBind(_: any, _2: string, descriptor: PropertyDescriptor) {
   const originalMethod = descriptor.value;
   const adjDescriptor: PropertyDescriptor = {
@@ -52,26 +100,47 @@ class ProjectInput {
     const enteredTitle = this.titleInputElement.value;
     const enteredDescription = this.descriptionInputElement.value;
     const enteredPeople = this.peopleInputElement.value;
+
+    // blueprints here
+    const titleValidatable: Validatable = {
+      value: enteredTitle,
+      required: true,
+    };
+    const descriptionValidatable: Validatable = {
+      value: enteredDescription,
+      required: true,
+      minLength: 3,
+    };
+    const peopleValidatable: Validatable = {
+      value: +enteredPeople,
+      required: true,
+      min: 1,
+      max: 20,
+    };
+
     // validations here...
     if (
-      enteredTitle.trim().length === 0 ||
-      enteredDescription.trim().length === 0 ||
-      enteredPeople.trim().length === 0
+      !validate(titleValidatable) ||
+      !validate(descriptionValidatable) ||
+      !validate(peopleValidatable)
     ) {
       alert("Please provide all values");
       return;
     } else {
-      return [enteredTitle, enteredDescription, parseInt(enteredPeople)];
+      return [enteredTitle, enteredDescription, +enteredPeople];
     }
   }
   @AutoBind
   private submitHandler(e: Event) {
     e.preventDefault();
     const userInput = this.gatherUserInput();
+
     // check if it is a tuple
     if (Array.isArray(userInput)) {
       const [title, description, people] = userInput;
       this.clearInputs();
+      console.log(userInput);
+
       console.log(title, description, people);
     }
   }
