@@ -1,6 +1,5 @@
 // Code goes here!
 console.log("%c D&D_Project", "color: red");
-
 // validate inputs
 interface Validatable {
   value?: string | number;
@@ -60,7 +59,41 @@ function AutoBind(_: any, _2: string, descriptor: PropertyDescriptor) {
   };
   return adjDescriptor;
 }
+// Project List
+class ProjectList {
+  templateElement: HTMLTemplateElement;
+  hostElement: HTMLDivElement;
+  element: HTMLElement;
 
+  constructor(private type: "active" | "finished") {
+    this.templateElement = document.getElementById(
+      "project-list"
+    )! as HTMLTemplateElement;
+    this.hostElement = document.getElementById("app")! as HTMLDivElement;
+    const importedNode = document.importNode(
+      this.templateElement.content,
+      true
+    );
+
+    this.element = importedNode.firstElementChild as HTMLElement;
+    this.element.id = `${this.type}-projects`;
+    this.attach();
+    this.renderContent();
+  }
+
+  // METHODS
+  private renderContent() {
+    const listId = `${this.type}-projects-list`;
+    this.element.querySelector("ul")!.id = listId;
+    this.element.querySelector("h2")!.textContent =
+      this.type.toUpperCase() + " PROJECTS ";
+  }
+
+  attach() {
+    this.hostElement.insertAdjacentElement("beforeend", this.element);
+  }
+}
+// Project Input
 class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
@@ -155,4 +188,6 @@ class ProjectInput {
   }
 }
 
-const projInput = new ProjectInput();
+const projectInput = new ProjectInput();
+const activeList = new ProjectList("active");
+const finishedList = new ProjectList("finished");
