@@ -269,4 +269,3 @@ __decorate([
 const projectInput = new ProjectInput();
 const activeList = new ProjectList("active");
 const finishedList = new ProjectList("finished");
-//# sourceMappingURL=app.js.map
