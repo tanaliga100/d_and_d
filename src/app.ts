@@ -202,27 +202,30 @@ class Project {
 }
 
 // Project List
-class ProjectList extends Component<HTMLDivElement, HTMLElement> {
+class ProjectList
+  extends Component<HTMLDivElement, HTMLElement>
+  implements DragTarget
+{
   assignedProjects: Project[] = [];
 
   constructor(private type: "active" | "finished") {
     super("project-list", "app", false, `${type}-projects`);
-
-    projectState.addListener((projects: Project[]) => {
-      const relevantProjects = projects.filter((prj) => {
-        if (this.type === "active") {
-          return prj.status === ProjectStatus.Active;
-        }
-        return prj.status === ProjectStatus.Finished;
-      });
-
-      this.assignedProjects = relevantProjects;
-      this.renderProjects();
-    });
     this.configure();
     this.renderContent();
   }
   // METHODS
+  @AutoBind
+  dragOverHandler(_: DragEvent): void {
+    const listEl = this.element.querySelector("ul")!;
+    listEl.classList.add("droppable");
+  }
+  dropHandler(_: DragEvent): void {}
+  @AutoBind
+  dragLeaveHandler(_: DragEvent): void {
+    const listEl = this.element.querySelector("ul")!;
+    listEl.classList.remove("droppable");
+  }
+
   private renderProjects() {
     const listEl = document.getElementById(
       `${this.type}-projects-list`
@@ -235,7 +238,24 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
       new ProjectItem(this.element.querySelector("ul")!.id, prjItem);
     }
   }
-  configure() {}
+  configure() {
+    this.element.addEventListener("dragover", this.dragOverHandler);
+    this.element.addEventListener("dragleave", this.dragLeaveHandler);
+    this.element.addEventListener("drop", this.dropHandler);
+
+    projectState.addListener((projects: Project[]) => {
+      const relevantProjects = projects.filter((prj) => {
+        if (this.type === "active") {
+          return prj.status === ProjectStatus.Active;
+        }
+        return prj.status === ProjectStatus.Finished;
+      });
+
+      this.assignedProjects = relevantProjects;
+      this.renderProjects();
+    });
+  }
+
   renderContent() {
     const listId = `${this.type}-projects-list`;
     this.element.querySelector("ul")!.id = listId;
