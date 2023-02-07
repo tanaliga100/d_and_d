@@ -1,6 +1,54 @@
 // Code goes here!
 console.log("%c D&D_Project", "color: red");
 
+// DRAG AND DROP INTERFACES
+interface Draggable {
+  dragStartHandler(event: DragEvent): void;
+  dragEndHandler(event: DragEvent): void;
+}
+interface DragTarget {
+  dragOverHandler(event: DragEvent): void;
+  dropHandler(event: DragEvent): void;
+  dragLeaveHandler(event: DragEvent): void;
+}
+
+// STATE MANAGEMENT CLASS
+type Listener = (items: Project[]) => void;
+class ProjectState {
+  private listeners: Listener[] = [];
+  private projects: Project[] = [];
+  static instance: ProjectState;
+  private constructor() {}
+
+  //METHODS
+  static getInstance() {
+    if (this.instance) {
+      return this.instance;
+    }
+    this.instance = new ProjectState();
+    return this.instance;
+  }
+  addProject(title: string, description: string, numOfPeople: number) {
+    const newProj = new Project(
+      Math.random().toString(),
+      title,
+      description,
+      numOfPeople,
+      ProjectStatus.Active
+    );
+
+    this.projects.push(newProj);
+    for (const listenerFn of this.listeners) {
+      listenerFn(this.projects.slice());
+    }
+  }
+
+  addListener(listenerFn: Listener) {
+    this.listeners.push(listenerFn);
+  }
+}
+const projectState = ProjectState.getInstance();
+
 // validate inputs
 interface Validatable {
   value?: string | number;
@@ -101,21 +149,39 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
 }
 
 // PROJECT ITEM CLASS
-class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+class ProjectItem
+  extends Component<HTMLUListElement, HTMLLIElement>
+  implements Draggable
+{
   private project: Project;
+
+  get persons() {
+    if (this.project.people === 1) {
+      return "1 person";
+    } else {
+      return `${this.project.people} persons`;
+    }
+  }
   constructor(hostId: string, project: Project) {
     super("single-project", hostId, false, project.id);
     this.project = project;
     this.configure();
     this.renderContent();
   }
-
   // METHODS
-  configure() {}
+  @AutoBind
+  dragStartHandler(event: DragEvent): void {
+    console.log("event", event);
+  }
+
+  dragEndHandler(_: DragEvent): void {}
+  configure() {
+    this.element.addEventListener("dragstart", this.dragStartHandler);
+    this.element.addEventListener("dragend", this.dragEndHandler);
+  }
   renderContent(): void {
     this.element.querySelector("h2")!.textContent = this.project.title;
-    this.element.querySelector("h3")!.textContent =
-      this.project.people.toString();
+    this.element.querySelector("h3")!.textContent = this.persons + " assigned";
     this.element.querySelector("p")!.textContent = this.project.description;
   }
 }
@@ -134,42 +200,6 @@ class Project {
     public status: ProjectStatus
   ) {}
 }
-// STATE MANAGEMENT CLASS
-type Listener = (items: Project[]) => void;
-class ProjectState {
-  private listeners: Listener[] = [];
-  private projects: Project[] = [];
-  static instance: ProjectState;
-  private constructor() {}
-
-  //METHODS
-  static getInstance() {
-    if (this.instance) {
-      return this.instance;
-    }
-    this.instance = new ProjectState();
-    return this.instance;
-  }
-  addProject(title: string, description: string, numOfPeople: number) {
-    const newProj = new Project(
-      Math.random().toString(),
-      title,
-      description,
-      numOfPeople,
-      ProjectStatus.Active
-    );
-
-    this.projects.push(newProj);
-    for (const listenerFn of this.listeners) {
-      listenerFn(this.projects.slice());
-    }
-  }
-
-  addListener(listenerFn: Listener) {
-    this.listeners.push(listenerFn);
-  }
-}
-const projectState = ProjectState.getInstance();
 
 // Project List
 class ProjectList extends Component<HTMLDivElement, HTMLElement> {
@@ -267,7 +297,7 @@ class ProjectInput {
     const peopleValidatable: Validatable = {
       value: +enteredPeople,
       required: true,
-      min: 1,
+      min: 0,
       max: 20,
     };
 
