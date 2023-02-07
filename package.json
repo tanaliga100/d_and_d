@@ -1,19 +1,24 @@
 {
-  "name": "understanding-typescript",
+  "name": "d&d-typescript",
   "version": "1.0.0",
-  "description": "Understanding TypeScript Course Setup",
+  "description": "Understanding TypeScript || Practice project",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "lite-server"
+    "start": "lite-server",
+    "build": "postcss src/css/styles.css -o dist/styles.css --watch"
   },
   "keywords": [
-    "typescript",
-    "course"
+    "typescript project"
   ],
-  "author": "Maximilian Schwarzmüller",
+  "author": "jordantanaliga100",
   "license": "ISC",
   "devDependencies": {
     "lite-server": "^2.5.4"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.13",
+    "postcss-cli": "^10.1.0",
+    "tailwindcss": "^3.2.4",
+    "watch": "^1.0.2"
   }
 }

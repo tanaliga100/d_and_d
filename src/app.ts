@@ -1,5 +1,5 @@
 // Code goes here!
-console.log("%c D&D_Project", "color: red");
+console.log("%c D&D_Project", "color: green");
 
 // DRAG AND DROP INTERFACES
 interface Draggable {
@@ -11,7 +11,6 @@ interface DragTarget {
   dropHandler(event: DragEvent): void;
   dragLeaveHandler(event: DragEvent): void;
 }
-
 // STATE MANAGEMENT CLASS
 type Listener = (items: Project[]) => void;
 class ProjectState {
@@ -192,8 +191,8 @@ class ProjectItem
     this.element.addEventListener("dragend", this.dragEndHandler);
   }
   renderContent(): void {
-    this.element.querySelector("h2")!.textContent = this.project.title;
-    this.element.querySelector("h3")!.textContent = this.persons + " assigned";
+    this.element.querySelector("h4")!.textContent = this.project.title;
+    this.element.querySelector("h6")!.textContent = this.persons + " assigned";
     this.element.querySelector("p")!.textContent = this.project.description;
   }
 }
@@ -253,6 +252,7 @@ class ProjectList
       `${this.type}-projects-list`
     )! as HTMLUListElement;
     listEl.innerHTML = "";
+    listEl.classList.add("prjLists");
     for (const prjItem of this.assignedProjects) {
       // const listItem = document.createElement("li");
       // listItem.textContent = prjItem.title;
