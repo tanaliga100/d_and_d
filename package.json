@@ -13,8 +13,10 @@
   "author": "jordantanaliga100",
   "license": "ISC",
   "devDependencies": {
+    "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.0",
     "lite-server": "^2.5.4",
+    "style-loader": "^3.3.1",
     "ts-loader": "^9.4.2",
     "webpack-cli": "^5.0.1"
   },
