@@ -2,9 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* * {
+* {
   box-sizing: border-box;
 }
+
+/*
 
 html {
   font-family: sans-serif;
@@ -12,9 +14,9 @@ html {
 
 body {
   margin: 0;
-} */
+}
 
-/* label,
+label,
 input,
 textarea {
   display: block;
@@ -38,49 +40,49 @@ input:focus,
 textarea:focus {
   outline: none;
   background: #fff5f9;
-} */
+}
 
-/* button {
+button {
   font: inherit;
   background: #ff0062;
   border: 1px solid #ff0062;
   cursor: pointer;
   color: white;
   padding: 0.75rem 1rem;
-} */
+}
 
-/* button:focus {
+button:focus {
   outline: none;
-} */
+}
 
-/* button:hover,
+button:hover,
 button:active {
   background: #a80041;
   border-color: #a80041;
-} */
-/* 
+}
+
 .projects {
   margin: 1rem;
   border: 1px solid #ff0062;
-} */
+}
 
-/* .projects header {
+.projects header {
   background: #ff0062;
   height: 3.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
-} */
+}
 
-/* #finished-projects {
+#finished-projects {
   border-color: #0044ff;
-} */
+}
 
-/* #finished-projects header {
+#finished-projects header {
   background: #0044ff;
-} */
+}
 
-/* .projects h2 {
+.projects h2 {
   margin: 0;
   color: white;
 }
@@ -101,20 +103,33 @@ button:active {
 .projects li h2 {
   color: #ff0062;
   margin: 0.5rem 0;
-} */
+}
 
-/* #finished-projects li h2 {
+#finished-projects li h2 {
   color: #0044ff;
-} */
+}
 
-/* .projects li h3 {
+.projects li h3 {
   color: #575757;
   font-size: 1rem;
-} */
+}
 
-/* .project li p {
+.project li p {
   margin: 0;
-} */
+}
+
+
+#finished-projects .droppable {
+  background: #d6e1ff;
+}
+
+#user-input {
+  margin: 1rem;
+  padding: 1rem;
+  background: #f7f7f7;
+}
+
+*/
 
 .droppable {
   background: rgba(255, 166, 0, 0.643) !important;
@@ -128,13 +143,3 @@ button:active {
   min-width: fit-content;
   flex-wrap: wrap;
 }
-/* 
-#finished-projects .droppable {
-  background: #d6e1ff;
-}
-
-#user-input {
-  margin: 1rem;
-  padding: 1rem;
-  background: #f7f7f7;
-} */

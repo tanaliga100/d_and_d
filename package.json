@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "lite-server",
-    "build": "postcss src/css/styles.css -o dist/styles.css --watch"
+    "build": "postcss src/styles.css -o dist/styles.css --watch"
   },
   "keywords": [
     "typescript project"
