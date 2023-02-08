@@ -5,8 +5,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { autobind } from "../decorators/autobind.js";
-import { Component } from "./base-component.js";
-export class ProjectItem extends Component {
+import BaseComponent from "./base-component.js";
+export class ProjectItem extends BaseComponent {
     constructor(hostId, project) {
         super("single-project", hostId, false, project.id);
         this.project = project;

@@ -7,9 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { autobind } from "../decorators/autobind.js";
 import { ProjectStatus } from "../models/project.js";
 import { projectState } from "../state/project-state.js";
-import { Component } from "./base-component.js";
+import BaseComponent from "./base-component.js";
 import { ProjectItem } from "./project-item.js";
-export class ProjectList extends Component {
+export class ProjectList extends BaseComponent {
     constructor(type) {
         super("project-list", "app", false, `${type}-projects`);
         this.type = type;
