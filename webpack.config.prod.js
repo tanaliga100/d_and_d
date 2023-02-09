@@ -9,7 +9,7 @@ module.exports = {
     // publicPath: "dist",
   },
 
-  devtool: "inline-source-map",
+  // devtool: "false",
   module: {
     rules: [
       {

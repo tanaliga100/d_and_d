@@ -42,7 +42,7 @@ module.exports = {
     // publicPath: "dist",
   },
 
-  devtool: "false",
+  devtool: "inline-source-map",
   module: {
     rules: [
       {
