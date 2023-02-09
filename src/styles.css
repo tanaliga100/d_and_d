@@ -5,3 +5,16 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+.droppable {
+  background: rgba(255, 166, 0, 0.643) !important;
+  border: 5px dotted white;
+  border-radius: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+.prjLists {
+  display: flex;
+  min-width: fit-content;
+  flex-wrap: wrap;
+}

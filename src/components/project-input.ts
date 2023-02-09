@@ -1,7 +1,7 @@
-import { autobind as Autobind } from "../decorators/autobind.js";
-import { projectState } from "../state/project-state.js";
-import * as Validation from "../util/validation.js";
-import BaseComponent from "./base-component.js";
+import { autobind as Autobind } from "../decorators/autobind";
+import { projectState } from "../state/project-state";
+import * as Validation from "../util/validation";
+import BaseComponent from "./base-component";
 
 // ProjectInput Class
 export class ProjectInput extends BaseComponent<
